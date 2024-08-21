@@ -1,132 +1,112 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Chart from 'chart.js/auto';
+import React, { useState } from 'react';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
+
+// Register necessary Chart.js components
+ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const LineChart = () => {
-  const [chart, setChart] = useState(null);
-  const chartRef = useRef(null);
-  const [weight, setWeight] = useState('');
-  const [height, setHeight] = useState('');
-  const [date, setDate] = useState('');
+  const [labels, setLabels] = useState([]);
+  const [data, setData] = useState([]);
+  const [labelInput, setLabelInput] = useState('');
+  const [numberInput, setNumberInput] = useState('');
 
-  useEffect(() => {
-    const ctx = chartRef.current.getContext('2d');
-    const newChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: [],
-        datasets: [{
-          label: 'Body Mass Index (BMI)',
-          data: [],
-          borderWidth: 2,
-          fill: false,
-          borderColor: 'rgba(0, 238, 131, 0.8)', // Default color
-          backgroundColor: 'rgba(0, 238, 131, 0.2)', // For filling area if needed
-        }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 50, // Set a sensible max value for BMI
-            title: {
-              display: true,
-              text: 'BMI'
-            }
-          },
-          x: {
-            title: {
-              display: true,
-              text: 'Date'
-            }
-          }
-        },
-      },
-    });
+  const handleAddData = () => {
+    const label = labelInput;
+    const number = parseFloat(numberInput);
 
-    setChart(newChart);
+    if (label !== "" && !isNaN(number)) {
+      // Create a new data point with the input values
+      const newEntry = { label, number };
 
-    return () => {
-      newChart.destroy();
-    };
-  }, []);
+      // Add the new entry to the data array
+      const updatedEntries = [...labels.map((label, index) => ({ label, number: data[index] })), newEntry];
 
-  const calculateBMI = (weight, height) => {
-    if (weight <= 0 || height <= 0) return null;
-    // Convert height from cm to meters
-    const heightInMeters = height / 100;
-    return (weight / (heightInMeters * heightInMeters)).toFixed(2);
+      // Sort entries by label (date/time)
+      updatedEntries.sort((a, b) => new Date(a.label) - new Date(b.label));
+
+      // Update labels and data arrays
+      setLabels(updatedEntries.map(entry => entry.label));
+      setData(updatedEntries.map(entry => entry.number));
+
+      // Clear input fields
+      setLabelInput('');
+      setNumberInput('');
+    } else {
+      alert("Please enter both label and a valid number.");
+    }
   };
 
-  const addData = () => {
-    if (!chart) return;
+  // Determine line color based on data values
+  const getBorderColor = () => {
+    if (data.some(value => value < 3.5 || value > 8.0)) {
+      return 'rgba(255, 0, 0, 0.8)'; // Red color for out-of-range values
+    }
+    return 'rgba(0, 238, 131, 0.8)'; // Green color for within-range values
+  };
 
-    const weightValue = parseFloat(weight);
-    const heightValue = parseFloat(height);
-    const bmi = calculateBMI(weightValue, heightValue);
+  // Chart data and options
+  const chartData = {
+    labels,
+    datasets: [
+      {
+        label: 'Blood Sugar Level - mmol/L',
+        data,
+        borderColor: getBorderColor(),
+        borderWidth: 1,
+        fill: false
+      }
+    ]
+  };
 
-    if (date && !isNaN(bmi) && bmi <= 50) {
-      const newLabel = date;
-      const newData = { label: newLabel, bmi };
-
-      // Create an array of current data with new entry
-      const dataEntries = chart.data.labels.map((label, index) => ({
-        label,
-        bmi: chart.data.datasets[0].data[index]
-      }));
-
-      dataEntries.push(newData);
-
-      // Sort the entries by date
-      dataEntries.sort((a, b) => new Date(a.label) - new Date(b.label));
-
-      // Update chart data
-      chart.data.labels = dataEntries.map(entry => entry.label);
-      chart.data.datasets[0].data = dataEntries.map(entry => entry.bmi);
-
-      // Update line color based on the latest BMI value
-      const latestBMI = dataEntries[dataEntries.length - 1].bmi;
-      const color = latestBMI < 18.5 || latestBMI > 24.9 ? 'rgba(255, 0, 0, 0.8)' : 'rgba(0, 238, 131, 0.8)';
-      chart.data.datasets[0].borderColor = color;
-
-      chart.update();
-    } else {
-      alert("Please enter a valid date and ensure that weight and height are positive numbers.");
+  const chartOptions = {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Blood Sugar Level (mmol/L)'
+        }
+      }
     }
   };
 
   return (
-    <div style={{ width: '100%', height: '300px' }}>
-      <canvas
-        ref={chartRef}
-        style={{ width: '100%', height: '100%' }} 
-      />
-      <div style={{ marginBottom: '10px' }}>
+    <div>
+      <h1>Check your Blood Sugar Level</h1>
+      <h5>Line will turn RED if it's not within health range</h5>
+      <div style={{ marginBottom: '20px' }}>
         <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          placeholder="Enter date"
+          type="text"
+          value={labelInput}
+          onChange={(e) => setLabelInput(e.target.value)}
+          placeholder="Date/Time (e.g., 2024-08-21T14:30:00)"
+          style={{
+            width: '100%',
+            padding: '15px',
+            fontSize: '18px',
+            backgroundColor: 'white',
+            color: 'black',
+            border: '1px solid #ccc',
+            borderRadius: '5px',}}
         />
-      </div>
-      <div style={{ marginBottom: '10px' }}>
-        <input
-          type="number"
-          placeholder="Enter weight (kg)"
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
-        />
-      </div>
-      <div style={{ marginBottom: '10px' }}>
         <input
           type="number"
-          placeholder="Enter height (cm)"
-          value={height}
-          onChange={(e) => setHeight(e.target.value)}
+          value={numberInput}
+          onChange={(e) => setNumberInput(e.target.value)}
+          placeholder="Blood Sugar Level (mmol/L)"
+          style={{
+            width: '100%',
+            padding: '15px',
+            fontSize: '18px',
+            backgroundColor: 'white',
+            color: 'black',
+            border: '1px solid #ccc',
+            borderRadius: '5px',}}
         />
+        <button onClick={handleAddData}>Add Data</button>
       </div>
-      <button onClick={addData}>Add Data</button>
+      <Line data={chartData} options={chartOptions} />
     </div>
   );
 };

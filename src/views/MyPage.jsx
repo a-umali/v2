@@ -8,6 +8,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AddchartIcon from '@mui/icons-material/Addchart';
 import CareTeam from "../components/CareTeam";
 
+
 export const MyPage = () => {
   const [openCalendarModal, setOpenCalendarModal] = useState(false);
   const [openChartModal, setOpenChartModal] = useState(false);
@@ -105,18 +106,14 @@ export const MyPage = () => {
           bgcolor: 'background.paper',
           boxShadow: 24,
           p: 4,
-          maxHeight: '70vh',
+          maxHeight: '80vh',
           overflowY: 'auto',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-          <Typography id="chart-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
-            <h3>Check your BMI</h3>
-            <p>Line will turn RED if you have an unhealthy BMI</p>
-          </Typography>
-          <Box sx={{ width: '100%', maxWidth: '600px', height: '400px' }}>
+          <Box sx={{ width: '100%', maxWidth: '700px', height: '700px' }}>
             <LineChart />
           </Box>
         </Box>

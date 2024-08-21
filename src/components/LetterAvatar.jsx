@@ -1,4 +1,4 @@
-"use client"; // client component, not server rendered
+"use client";
 
 import { Box, Avatar, Tooltip } from "@mui/material";
 import NoAccountsIcon from "@mui/icons-material/NoAccounts";
