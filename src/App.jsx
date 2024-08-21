@@ -9,8 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { baseTheme } from "./themes/baseTheme";
 import { PatientInformation } from "./views/PatientInformation";
 import { MyPage } from "./views/MyPage";
-import SummaryPage from './views/SummaryPage'; // Ensure this path is correct
-import { Profile } from "./views/Profile";
+import SummaryPage from './views/SummaryPage'; 
 import { PatientSummary } from "./components/PatientSummary";
 
 const App = () => {
@@ -27,13 +26,12 @@ const App = () => {
               <Route path="/messages" element={<WelcomePage />} />
               <Route path="/patient-info" element={<PatientInformation />} />
               <Route path="/summary" element={<SummaryPage />} />
-              <Route path="/profile" element={<Profile />} />
               <Route path="/patient-summary" element={<PatientSummary />} />
               <Route path="*" element={<div>Hey, this path doesn't exist yet...</div>} />
             </Routes>
           </Box>
 
-          <Footer />
+          {/* <Footer /> */}
         </Box>
       </ThemeProvider>
     </MainProvider>

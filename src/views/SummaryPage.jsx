@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
-import TobaccoChart from '../components/TobaccoChart';
+import { Grid, Box } from '@mui/material';
 import BmiCalculator from '../components/BmiCalculator';
+import { TobaccoChart } from '../components/TobaccoChart';
+
+
 
 export const SummaryPage = () => {
 
@@ -23,8 +25,11 @@ export const SummaryPage = () => {
         justifyContent: 'center', 
     }}>
       <h1>API renders here</h1>
-        {/* <TobaccoChart/> */}
+
         <BmiCalculator />
+        {/* <Box>
+        <TobaccoChart/> 
+        </Box> */}
     </Grid>
   );
 };

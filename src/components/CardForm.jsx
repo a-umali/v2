@@ -93,12 +93,10 @@ const CardForm = () => {
                 <Typography variant="h6" component="div" color={secondaryColor}>
                   {card.title}
                 </Typography>
-                <Typography variant="subtitle2" color={secondaryColor}>
+                <Typography variant="subtitle2">
                   {card.date}
                 </Typography>
-                <Typography variant="body2" color={theme.palette.text.primary}>
                   {card.description}
-                </Typography>
                 <div style={{ marginTop: 10 }}>
                   <Button variant="outlined" color="secondary" onClick={() => handleEdit(card)}>
                     Edit

@@ -8,7 +8,7 @@ import fetchTobaccoData from '../fetchTobaccodata';
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, LineElement, Title, Tooltip, Legend);
 
-const TobaccoChart = () => {
+export const TobaccoChart = () => {
   const [data, setData] = useState([]);
   const [chartData, setChartData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -60,5 +60,3 @@ const TobaccoChart = () => {
     </div>
   );
 };
-
-export default TobaccoChart;

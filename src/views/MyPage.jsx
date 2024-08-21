@@ -25,7 +25,7 @@ export const MyPage = () => {
       alignItems: "flex-start",
       justifyContent: "center",
       height: "100vh",
-      overflow: "hidden" // Prevents overflow on the main container
+      overflow: "hidden", // Prevents overflow on the main container
     }}>
       {/* Column with xs=8 */}
       <Grid item xs={6}
@@ -131,5 +131,4 @@ export const pages = [
   { title: "Summary", href: "/summary" },
   { title: "Patient Information", href: "/patient-info" },
   { title: "Patient Summary", href: "/patient-summary" },
-  { title: "Profile", href: "/profile" },
 ];

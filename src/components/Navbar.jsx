@@ -31,11 +31,7 @@ export const Navbar = () => {
         <Toolbar disableGutters>
           {/* Logo for MD size */}
           <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: 'center' }}>
-            <img
-              src="/assets/chart.gif" // Ensure this path is correct
-              alt="Logo"
-              style={{ height: '35px', width: 'auto' }} // Ensure proper sizing
-            />
+            LOGO
           </Box>
 
           {/* Menu Button for XS size */}
@@ -88,12 +84,7 @@ export const Navbar = () => {
               flexGrow: 1,
               alignItems: 'center'
             }}
-          >
-            <img
-              src="/assets/chart.gif" // Ensure this path is correct
-              alt="Logo"
-              style={{ height: '30px', width: 'auto' }} // Ensure proper sizing
-            />
+          >LOGO
           </Box>
 
           {/* Links for MD size */}
@@ -115,3 +106,5 @@ export const Navbar = () => {
     </AppBar>
   );
 };
+
+

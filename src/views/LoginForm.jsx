@@ -15,7 +15,11 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useMainContext } from "../store/mainStore";
 import LoginIcon from "@mui/icons-material/Login";
-import backgroundImage from "../images/background.jpg"; // Adjust the path to your image
+import backgroundImage from "../images/background.jpg"; 
+import ForumIcon from '@mui/icons-material/Forum';
+import FolderIcon from '@mui/icons-material/Folder';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
 
 export const LoginForm = () => {
   // States
@@ -89,10 +93,22 @@ export const LoginForm = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            backgroundColor: "rgba(255, 255, 255, 0.8)", // Make background semi-transparent
+            backgroundColor: "rgba(255, 255, 255, 0.9)", // Make background semi-transparent
           }}
         >
         <Typography variant="h4">Welcome to my website</Typography>
+        <Box>
+        <h3><ForumIcon fontSize="large"/> Communicate with your doctor</h3>
+        <p>Get answers to your medical questions from the comfort of your own home</p>
+        </Box>
+        <Box>
+        <h3><FolderIcon fontSize="large"/> Save your medical records</h3>
+        <p>No more waiting for a phone call or letter to view your results and your doctor's comments within days</p>
+        </Box>
+        <Box>
+        <h3><CalendarMonthIcon fontSize="large"/> Manage your appointments</h3>
+        <p>Schedule your next appointment, or view details of your past and upcoming appointments</p>
+        </Box>
         </Paper>
       </Grid>
 
@@ -111,7 +127,7 @@ export const LoginForm = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            backgroundColor: "rgba(255, 255, 255, 0.8)", // Make background semi-transparent
+            backgroundColor: "rgba(255, 255, 255, 0.9)", // Make background semi-transparent
           }}
         >
           <Typography variant="h4" sx={{ mb: 2 }}>

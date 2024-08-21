@@ -1,89 +1,110 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Paper, Grid } from '@mui/material';
+import {
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Box,
+  Alert,
+} from '@mui/material';
 
 const BmiCalculator = () => {
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
-  const [bmi, setBmi] = useState(null);
+  const [sex, setSex] = useState('m');
+  const [age, setAge] = useState('');
+  const [waist, setWaist] = useState('');
+  const [hip, setHip] = useState('');
+  const [bmiResult, setBmiResult] = useState(null);
   const [error, setError] = useState(null);
 
-  const handleCalculate = async () => {
+  const handleSubmit = async () => {
     try {
+      const response = await axios.post('http://localhost:5000/api/bmi', {
+        weight: { value: weight, unit: 'kg' },
+        height: { value: height, unit: 'cm' },
+        sex,
+        age,
+        waist,
+        hip
+      });
+      setBmiResult(response.data);
       setError(null);
-      const response = await axios.post(
-        'https://bmi.p.rapidapi.com/v1/bmi',
-        {
-          weight: { value: weight, unit: 'kg' },
-          height: { value: height, unit: 'cm' },
-          sex: 'm',
-          age: '24',
-          waist: '34.00',
-          hip: '40.00',
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-RapidAPI-Host': 'bmi.p.rapidapi.com',
-            'X-RapidAPI-Key': '06f4442320msh202a6df40bc862dp1bb8f7jsn556d090a2b93',
-          },
-        }
-      );
-  
-      setBmi(response.data.bmi);
     } catch (err) {
-      console.error('Error during API call:', err);
-      setError(err.response ? err.response.data : err.message);
+      setError('An error occurred while calculating BMI.');
+      setBmiResult(null);
     }
   };
   
 
   return (
-    <Paper style={{ padding: '16px', maxWidth: '600px', margin: 'auto' }}>
-      <Typography variant="h4" gutterBottom>
-        BMI Calculator
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            label="Weight (kg)"
-            type="number"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            label="Height (cm)"
-            type="number"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCalculate}
-            fullWidth
-          >
-            Calculate BMI
-          </Button>
-        </Grid>
-      </Grid>
-      {bmi && (
-        <Typography variant="h6" style={{ marginTop: '16px' }}>
-          Your BMI is: {bmi}
+    <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Paper sx={{ p: 2, maxWidth: 600, width: '100%' }}>
+        <Typography variant="h5" gutterBottom>
+          BMI Calculator
         </Typography>
-      )}
-      {error && (
-        <Typography color="error" style={{ marginTop: '16px' }}>
-          {error}
-        </Typography>
-      )}
-    </Paper>
+        <TextField
+          label="Weight (kg)"
+          type="number"
+          fullWidth
+          margin="normal"
+          value={weight}
+          onChange={(e) => setWeight(e.target.value)}
+        />
+        <TextField
+          label="Height (cm)"
+          type="number"
+          fullWidth
+          margin="normal"
+          value={height}
+          onChange={(e) => setHeight(e.target.value)}
+        />
+        <TextField
+          label="Age"
+          type="number"
+          fullWidth
+          margin="normal"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+        />
+        <TextField
+          label="Waist (cm)"
+          type="number"
+          fullWidth
+          margin="normal"
+          value={waist}
+          onChange={(e) => setWaist(e.target.value)}
+        />
+        <TextField
+          label="Hip (cm)"
+          type="number"
+          fullWidth
+          margin="normal"
+          value={hip}
+          onChange={(e) => setHip(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          sx={{ mt: 2 }}
+        >
+          Calculate BMI
+        </Button>
+        {error && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {error}
+          </Alert>
+        )}
+        {bmiResult && (
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="h6">BMI Result:</Typography>
+            <pre>{JSON.stringify(bmiResult, null, 2)}</pre>
+          </Box>
+        )}
+      </Paper>
+    </Box>
   );
 };
 
