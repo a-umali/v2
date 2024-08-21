@@ -1,0 +1,38 @@
+#root {
+  width: 100vw;
+  height: 100vh;
+  --16px: 1rem;
+  --24px: 1.5rem;
+  --32px: 2rem;
+  --300px: 18.75rem;
+}
+/* App.css */
+.provider-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+.provider-card .avatar {
+  margin-right: 15px;
+}
+
+.provider-card .details {
+  flex: 1;
+}
+
+.provider-card .actions {
+  display: flex;
+  align-items: center;
+}
+.card-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.card-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}

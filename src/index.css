@@ -1,0 +1,173 @@
+/* Global styles */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: black;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Linear gradient background */
+body {
+  margin: 0;
+  background: linear-gradient(to top, #BDDEF8, #2F79B2); /* Gradient background */
+  color: black;
+}
+
+/* Link styles */
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+/* Button styles */
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Navbar styles */
+.NavBar ul {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  padding: 0;
+}
+.NavBar ul li a {
+  padding: 1em;
+  color: inherit;
+  text-transform: uppercase;
+  display: inline-block;
+  text-decoration: none;
+}
+.NavBar ul li a.active {
+  font-weight: bold;
+}
+
+/* Media queries for light color scheme */
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #47f87c;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* Responsive font sizes */
+h1.rem {
+  font-size: var(--32px);
+}
+h2.rem {
+  font-size: var(--24px);
+}
+p.rem {
+  font-size: var(--16px);
+  margin-bottom: var(--2px);
+}
+
+/* Line chart container styles */
+.line-chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Ensure it takes full width of its container */
+  height: 300px; /* Allow it to expand to the height of the Grid item */
+  padding: 16px; /* Add padding as needed */
+  box-sizing: border-box;
+}
+
+.line-chart {
+  width: 100%; /* Ensure the canvas takes the full width */
+  height: 300px; /* Set a height that fits within the Grid item */
+}
+
+/* Input and button margin */
+input, button {
+  margin: 5px;
+}
+
+/* Footer styles */
+.footer {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* React Calendar styles */
+.react-calendar {
+  background-color: #67a7fc; /* Dark background for the calendar */
+  color: #000000; /* Light text color */
+  border: 5px solid #ffffff; /* Border color for the calendar */
+  border-radius: 4px;
+}
+
+.react-calendar__month-view {
+  border: 10px solid #00065ab6; /* Border color for the month view */
+}
+
+.react-calendar__tile {
+  background: transparent; /* Transparent background for tiles */
+  color: #000000; /* Light text color for tiles */
+}
+
+.react-calendar__tile--active {
+  background: #0cfcb4; /* Highlight color for active tile */
+  color: #000000; /* Dark text color for active tile */
+}
+
+.react-calendar__tile--hasActive {
+  background: #ffffff; /* Background for tiles with active state */
+}
+
+.react-calendar__tile--now {
+  background: #eafa59; /* Background color for the current date */
+  color: #000000; /* Dark text color for the current date */
+}
+
+.react-calendar__navigation button {
+  color: #000000; /* Color for navigation buttons */
+}
+
+.react-calendar__navigation button:hover {
+  background-color: #ffffff; /* Background color on hover */
+}
+
+.react-calendar__navigation button:disabled {
+  color: #555; /* Color for disabled navigation buttons */
+}
+
+.react-calendar__year-view {
+  border: 10px solid #000000; /* Border color for year view */
+}
+
+.react-calendar__decade-view {
+  border: 10px solid #000000; /* Border color for decade view */
+}

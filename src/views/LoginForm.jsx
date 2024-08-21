@@ -1,0 +1,162 @@
+import React, { useEffect, useState } from "react";
+import {
+  TextField,
+  Checkbox,
+  Button,
+  Paper,
+  Box,
+  Typography,
+  Alert,
+  Grid,
+  FormControl,
+  FormControlLabel,
+} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useMainContext } from "../store/mainStore";
+import LoginIcon from "@mui/icons-material/Login";
+import backgroundImage from "../images/background.jpg"; // Adjust the path to your image
+
+export const LoginForm = () => {
+  // States
+  const { handleUpdateUser } = useMainContext();
+  const navigateTo = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [hasSubmit, setHasSubmit] = useState(false);
+
+  const standardTopPadding = { pt: "10px" };
+  const standardTopMargin = { mt: "10px" };
+
+  useEffect(() => {
+    if (hasSubmit) {
+      navigateTo("/home");
+    }
+  }, [hasSubmit, navigateTo]);
+
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleRememberMeChange = (e) => setRememberMe(e.target.checked);
+
+  const handleSubmit = () => {
+    axios
+      .post("http://localhost:8000/user-auth", { email, password })
+      .then((response) => {
+        if (response.data.auth_token) {
+          handleUpdateUser(response.data);
+          setHasSubmit(true);
+        }
+      })
+      .catch((error) => {
+        console.error("User auth error", error);
+      });
+  };
+
+  const displayAlert = () => {
+    return hasSubmit ? (
+      <Alert severity="success">Welcome back, {email}</Alert>
+    ) : null;
+  };
+
+  return (
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        padding: 2,
+        display: "flex",
+        alignItems: "flex-start",
+        justifyContent: "center",
+        height: "100vh",
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Column with xs=8 */}
+      <Grid
+        item
+        xs={6}
+        sx={{
+          padding: 2,
+          height: "80vh",
+        }}
+      >
+        <Paper
+          sx={{
+            padding: 2,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            backgroundColor: "rgba(255, 255, 255, 0.8)", // Make background semi-transparent
+          }}
+        >
+        <Typography variant="h4">Welcome to my website</Typography>
+        </Paper>
+      </Grid>
+
+      {/* Column with xs=4 */}
+      <Grid
+        item
+        xs={4}
+        sx={{
+          padding: 2,
+          height: "80vh",
+        }}
+      >
+        <Paper
+          sx={{
+            padding: 2,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            backgroundColor: "rgba(255, 255, 255, 0.8)", // Make background semi-transparent
+          }}
+        >
+          <Typography variant="h4" sx={{ mb: 2 }}>
+            Login
+          </Typography>
+          {displayAlert()}
+          <FormControl fullWidth>
+            <TextField
+              label="Email"
+              variant="outlined"
+              sx={standardTopPadding}
+              onChange={handleEmailChange}
+            />
+            <TextField
+              type="password"
+              label="Password"
+              variant="outlined"
+              sx={standardTopPadding}
+              onChange={handlePasswordChange}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={rememberMe}
+                  onChange={handleRememberMeChange}
+                />
+              }
+              label="Remember Me"
+            />
+            <Button
+              size="large"
+              variant="contained"
+              sx={standardTopMargin}
+              disabled={!email || !password}
+              onClick={handleSubmit}
+              startIcon={<LoginIcon />}
+            >
+              Login
+            </Button>
+            <Box sx={standardTopMargin}>
+              <Link to="/register">Register</Link>
+            </Box>
+          </FormControl>
+        </Paper>
+      </Grid>
+    </Grid>
+  );
+};
