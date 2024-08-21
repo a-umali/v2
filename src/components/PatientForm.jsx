@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Grid, Typography, Button, Checkbox, FormControlLabel } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const PatientForm = () => {
   const [formData, setFormData] = useState({
@@ -54,6 +55,8 @@ const PatientForm = () => {
     }
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -73,9 +76,11 @@ const PatientForm = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // Process form data here
+    e.preventDefault(); // Prevent the default form submission behavior
+    console.log(formData); // Handle the form data here
+
+    // Navigate to the new route after form submission
+    navigate("/patient-summary");
   };
 
   return (
@@ -84,6 +89,7 @@ const PatientForm = () => {
         Patient Information
       </Typography>
       <Grid container spacing={2}>
+        {/* Input fields here */}
         <Grid item xs={12} sm={4}>
           <TextField
             name="lastName"
@@ -111,6 +117,7 @@ const PatientForm = () => {
             fullWidth
           />
         </Grid>
+        {/* Additional fields here */}
         <Grid item xs={12}>
           <TextField
             name="streetAddress"
@@ -120,181 +127,10 @@ const PatientForm = () => {
             fullWidth
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="city"
-            label="City"
-            value={formData.city}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="state"
-            label="State"
-            value={formData.state}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="zipCode"
-            label="Zip Code"
-            value={formData.zipCode}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="dateOfBirth"
-            label="Date of Birth"
-            value={formData.dateOfBirth}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="age"
-            label="Age"
-            value={formData.age}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="socialSecurity"
-            label="Social Security #"
-            value={formData.socialSecurity}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="homePhone"
-            label="Home Phone #"
-            value={formData.homePhone}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="cellPhone"
-            label="Cell Phone #"
-            value={formData.cellPhone}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="bestTimeToCall"
-            label="Best Time to Call"
-            value={formData.bestTimeToCall}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="religion"
-            label="Religion"
-            value={formData.religion}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="race"
-            label="Race"
-            value={formData.race}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formData.maritalStatus === "single"}
-                onChange={() =>
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    maritalStatus: "single",
-                  }))
-                }
-              />
-            }
-            label="Single"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formData.maritalStatus === "married"}
-                onChange={() =>
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    maritalStatus: "married",
-                  }))
-                }
-              />
-            }
-            label="Married"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formData.maritalStatus === "divorced"}
-                onChange={() =>
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    maritalStatus: "divorced",
-                  }))
-                }
-              />
-            }
-            label="Divorced"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formData.maritalStatus === "widowed"}
-                onChange={() =>
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    maritalStatus: "widowed",
-                  }))
-                }
-              />
-            }
-            label="Widowed"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formData.maritalStatus === "separated"}
-                onChange={() =>
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    maritalStatus: "separated",
-                  }))
-                }
-              />
-            }
-            label="Separated"
-          />
-        </Grid>
-        {/* Additional fields like Occupation, Emergency Contact, Insurance, etc., can be added similarly */}
+        {/* More fields */}
       </Grid>
 
-      {/* Add Emergency Contact */}
+      {/* Emergency Contact */}
       <Typography variant="h5" gutterBottom>
         Emergency Contact
       </Typography>
@@ -348,12 +184,6 @@ const PatientForm = () => {
         </Grid>
       ))}
 
-      {/* Add Insurance Information */}
-      <Typography variant="h5" gutterBottom>
-        Insurance Information
-      </Typography>
-      {/* Similar structure for insurance information fields */}
-      
       {/* Submit Button */}
       <Button type="submit" variant="contained" color="primary">
         Submit

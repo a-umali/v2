@@ -30,7 +30,6 @@ const App = () => {
               <Route path="*" element={<div>Hey, this path doesn't exist yet...</div>} />
             </Routes>
           </Box>
-
           {/* <Footer /> */}
         </Box>
       </ThemeProvider>

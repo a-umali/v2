@@ -35,7 +35,7 @@ export const LoginForm = () => {
 
   useEffect(() => {
     if (hasSubmit) {
-      navigateTo("/home");
+      navigateTo("/my-page");
     }
   }, [hasSubmit, navigateTo]);
 
@@ -93,7 +93,7 @@ export const LoginForm = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            backgroundColor: "rgba(255, 255, 255, 0.9)", // Make background semi-transparent
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
           }}
         >
         <Typography variant="h4">Welcome to my website</Typography>
@@ -127,7 +127,7 @@ export const LoginForm = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            backgroundColor: "rgba(255, 255, 255, 0.9)", // Make background semi-transparent
+            backgroundColor: "rgba(255, 255, 255, 0.9)", 
           }}
         >
           <Typography variant="h4" sx={{ mb: 2 }}>

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Typography, Paper, Grid, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { light } from "@mui/material/styles/createPalette";
 
 export const PatientSummary = () => {
 	const [formData, setFormData] = useState(null);
